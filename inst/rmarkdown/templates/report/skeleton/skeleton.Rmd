@@ -1,0 +1,87 @@
+---
+title: "處理2003(92R)變數 v1"
+author: "lin"
+date: "`r format(Sys.time(), '%d %B, %Y, %H:%M')`"
+header-includes:
+- \usepackage{xeCJK}
+- \setCJKmainfont{標楷體}
+output:
+  SmdAid::smd_html:  
+    toc: yes
+    toc_float:
+      collapsed: false
+#     smooth_scroll: true        
+#    df_print: paged
+    highlight: tango  
+#    css: ["adv-r.css","mystyle.css","bluetable.css"]  
+  word_document:
+    toc: yes
+  pdf_document: 
+    latex_engine: xelatex 
+    toc: yes
+
+---
+
+```{r setup, echo=FALSE, message=FALSE}
+library(SmdAid)
+stata_pre<<-"out_v1"
+ 
+```
+  
+
+```{stata, collectcode=TRUE, echo=FALSE, results="hide"}
+global outposix "out_v1"
+
+// 清除報表: 殺掉暫存檔 
+local xfiles : dir report files "${outposix}_*.*"
+
+foreach fn of local xfiles {
+ erase report/`fn'
+}
+
+adopath + "D:\Activity\elderman\utils"
+set linesize 255
+```
+
+
+
+# 最簡單的範例
+
+ 
+```{stata, collectcode=TRUE}
+
+sysuse auto
+```
+
+# 我自己要用的
+
+### regress
+
+```{stata, ,collectcode=TRUE, echo=FALSE, cleanlog=FALSE }
+global xalt1 child    
+eststo clear
+eststo: regress foreign price
+
+```
+
+
+```{stata, outposix=linkto("html","## **html外部連結**"),collectcode=TRUE, echo=FALSE, cleanlog=FALSE }
+genfilename "$outposix",post(.html) pre("report/") autoinc 
+esttab using `r(fn)',starlevels( * 0.10 ** 0.05 *** 0.010) r2 pr2 aic   replace label mtitle nobaselevel nolines nogaps onecell  nonumbers title("104新舊") ///
+        nobaselevel refcat(1.child "子女數(base 0)" /// 
+                           2.incom "收入(base 10-)" ///
+                           2.age104 "年齡(base 50-54)" ///
+                           1.educ "教育程度(base 不識字)" ///
+                           1.incom2 "新收入(base 70-)" ///
+                           1.child2 "子女數(base 0)"  ///
+                           1.age2 "新年齡(base 50-59)",nolabel) 
+
+```
+
+
+
+
+# 所有程式碼
+
+```{r allcode, listallcode=T}
+```
