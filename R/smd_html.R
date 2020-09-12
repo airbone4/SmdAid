@@ -135,7 +135,7 @@ smd_html<-function(...,output_dir="report"){
     #    system.file("rmarkdown/templates/report/resources/mystyle.css", package = "SmdAid"),
     #    system.file("rmarkdown/templates/report/resources/bluetable.css", package = "SmdAid"))
     #rmarkdown::render(...,encoding="UTF-8",output_dir=output_dir)
-    rmarkdown::html_document(...,css=css,encoding="UTF-8",output_dir=output_dir)
+    rmarkdown::html_document(...,css=css,encoding="UTF-8",output_dir="report")
 }
 
 getStataLabel<-function ()

@@ -1,16 +1,16 @@
- 
+# SmdAid
+This package groups some utilities that I often use for [Statamarkdown]((https://www.ssc.wisc.edu/~hemken/Stataworkshops/Stata%20and%20R%20Markdown/InstallingStatamarkdown.html)).
 
-## Statamarkdown
- 
- [install Statamarkdown](https://www.ssc.wisc.edu/~hemken/Stataworkshops/Stata%20and%20R%20Markdown/InstallingStatamarkdown.html)
- 
- 
-## This package
+Currently the package includes 
 
-used to help me .
+*  
 
+
+ 
 # install
 
-`devtools::install_github("airbone4/SmdAid")`
+``` r
+devtools::install_github("airbone4/SmdAid")
+```
 
 
