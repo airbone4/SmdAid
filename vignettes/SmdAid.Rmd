@@ -1,0 +1,48 @@
+---
+title: "SmdAid"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{SmdAid}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(SmdAid)
+stata_pre<<-"out_panel_combo_v1"
+```
+
+
+```{stata, collectcode=TRUE, echo=FALSE,results="hide"}
+global outposix "out_panel_combo_v1"
+adopath + "D:\Activity\elderman\utils"
+set linesize 255
+```
+
+```{stata,collectcode=T}
+sysuse auto
+```
+
+
+
+```{stata, outposix=linkto("html","### 表格"),collectcode=TRUE, echo=TRUE, cleanlog=FALSE}
+
+ eststo clear
+ eststo: regress price foreign
+ eststo: regress price i.foreign 
+genfilename "$outposix",post(.html) pre("report/")  autoinc 
+esttab using  "`r(fn)'",   label nowrap  mtitle title("分年") nonumbers unstack noline html
+
+
+```
+
+
+
+
