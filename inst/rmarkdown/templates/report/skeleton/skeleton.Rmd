@@ -1,6 +1,6 @@
 ---
-title: "處理2003(92R)變數 v1"
-author: "lin"
+title: "Title"
+author: "len jwj cen"
 date: "`r format(Sys.time(), '%d %B, %Y, %H:%M')`"
 header-includes:
 - \usepackage{xeCJK}
@@ -11,7 +11,7 @@ output:
     toc_float:
       collapsed: false
 #     smooth_scroll: true        
-#    df_print: paged
+    df_print: paged
     highlight: tango  
 #    css: ["adv-r.css","mystyle.css","bluetable.css"]  
   word_document:
@@ -19,7 +19,7 @@ output:
   pdf_document: 
     latex_engine: xelatex 
     toc: yes
-
+knit: SmdAid::myknit
 ---
 
 ```{r setup, echo=FALSE, message=FALSE}

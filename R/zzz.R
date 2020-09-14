@@ -1,10 +1,10 @@
 
-.onLoad <- function (libname, pkgname) {
-  #if (!requireNamespace("utils")) stop("Requires utils package.")
-   print(".onLoad")
+#.onLoad <- function (libname, pkgname) {
+
+  # print(".onLoad")
   # print(utils::globalVariables())
-  #utils::globalVariables("hook_orig", "Statamarkdown") # to suppress CHECK note
-}
+
+#}
 
 .onAttach <- function (libname, pkgname) {
   library(Statamarkdown)
@@ -103,7 +103,7 @@
         txt<-paste(readLines(options$listdo,encoding="UTF-8"),sep="\n",collapse='\n')
         txt<-paste("\`\`\`stata  ",txt,"\n\`\`\` ",sep = "\n")
         txt<-paste("\n subrouting ",options$listdo," \n",txt,sep = "\n")
-        cat(txt)
+        #cat(txt)
         return(txt)
       }
     }
@@ -120,7 +120,7 @@
       })
       # codelist 是一個list
       txt<-paste(unlist(codelist),sep="\n",collapse='\n')
-      txt<-paste("\`\`\`stata  ",txt,"\n\`\`\` ",sep = "\n")
+      txt<-paste("\`\`\`{.stata .SmdAidAll}  ",txt,"\n\`\`\` ",sep = "\n")
       return(txt)
     }
   )
