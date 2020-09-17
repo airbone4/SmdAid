@@ -5,8 +5,11 @@
   # print(utils::globalVariables())
 
 #}
-
+# 找檔案,產生連結,我用了getwd()來知道現在在哪裡,
+# 但是問題是,不見得工作目錄=檔案位置
 .onAttach <- function (libname, pkgname) {
+  # libname=> C:/Program Files/R/R-4.0.2/library
+  # pkgname =>pkgname
   library(Statamarkdown)
 
   #library(Statamarkdown)
@@ -14,26 +17,6 @@
   knitr::knit_hooks$set(
     #before : 是否是chunk處理之前
     outposix = function(before, options, envir) {
-
-      getmaxno<-function(pattern,ext){
-        library(stringr)
-        wd<-paste0(getwd(),"/report/")
-        # cat(paste0("======>",wd),sep="\n")
-        list <- list.files(wd, "*" );
-        # cat(list,sep="\n")
-        what<-paste0("(?<=",pattern,"_).*","(?=\\.",ext,")");
-        # cat(paste0("=====>",what))
-
-        idxlist<-as.integer(str_extract(list,what));
-        idxlist<-idxlist[!is.na(idxlist)];
-        if(length(idxlist)==0)
-          return(0)
-        else{
-          no<-max(idxlist,na.rm=TRUE);
-          return(no)
-        }
-      }
-
 
       opts<-unlist(strsplit(options$outposix, ","));
       pattern<-opts[1];
@@ -60,15 +43,17 @@
           if(ext=="png"){
             for(idx in  seq(lastno+1,no)){
               of<-paste0("![fig](./report/",pattern,"_",idx,".",ext,"){ width=80% }  \n")
-              rst<-paste0(rst,of)
+              rst<-paste0(rst,of,"\n***  \n")
             }
+
+            #cat(rst,file="c:/temp/xx1.txt",sep="\n",append = T)
           }
           else if(ext=="html"){
             for(idx in  seq(lastno+1,no)){
               fn<-paste0(pattern,"_",idx,".",ext)
               hhtxt<-paste(readLines(paste0("report/",fn),encoding = "UTF-8"),collapse=" ")
-              cat(fn,file="c:/temp/xx1.txt",sep="\n",append = T)
-              cat(hhtxt,file="c:/temp/xx1.txt",sep="\n",append = T)
+              #cat(fn,file="c:/temp/xx1.txt",sep="\n",append = T)
+              #cat(hhtxt,file="c:/temp/xx1.txt",sep="\n",append = T)
               #hhtxt<-paste(readLines(fn,encoding = "UTF-8"),collapse=" ")
               of<-paste0("[",ext," link ](./",pattern,"_",idx,".",ext,")  \n")
               rst<-paste0(rst,of)
