@@ -2,10 +2,17 @@
 % Please edit documentation in R/linkto.R
 \name{linkto}
 \alias{linkto}
-\title{linkto().}
+\title{linkto().這個函數其實是輔助outposix,用來產生outposix需要的參數,}
 \usage{
 linkto(ext, title)
 }
 \description{
 outposix=linkto() 將函數linkto() 的結果作為參數放在options@outposix
+}
+\details{
+需要改進:
+\enumerate{
+\item 這個函數有需要改進的地方,用到了總體變數stata_pre
+\item 應該採用yaml
+}
 }

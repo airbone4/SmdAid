@@ -30,4 +30,6 @@ doc
 .Rbuildignore
 
 myNote.Md
-inst/doc
+inst/doc/
+test/
+MyNote/

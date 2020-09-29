@@ -10,15 +10,14 @@ output:
     toc: yes
     toc_float:
       collapsed: false
-#     smooth_scroll: true        
     df_print: paged
     highlight: tango  
-#    css: ["adv-r.css","mystyle.css","bluetable.css"]  
   word_document:
     toc: yes
   pdf_document: 
     latex_engine: xelatex 
     toc: yes
+    
 knit: SmdAid::myknit
 ---
 
@@ -27,20 +26,23 @@ library(SmdAid)
 stata_pre<<-"out_v1"
  
 ```
-  
 
-```{stata, collectcode=TRUE, echo=FALSE, results="hide"}
+```{stata, collectcode=TRUE, echo=FALSE, results="hide"}  
 global outposix "out_v1"
-
-// 清除報表: 殺掉暫存檔 
-local xfiles : dir report files "${outposix}_*.*"
-
-foreach fn of local xfiles {
- erase report/`fn'
-}
-
 adopath + "D:\Activity\elderman\utils"
 set linesize 255
+```
+
+```{stata, echo=FALSE, results="hide"}
+// 清除報表: 殺掉暫存檔 
+local report report
+local xfiles : dir `report' files "${outposix}_*.*"
+
+foreach fn of local xfiles {
+ erase `report'/`fn'
+}
+
+
 ```
 
 
@@ -64,6 +66,7 @@ eststo: regress foreign price
 
 ```
 
+### 報表
 
 ```{stata, outposix=linkto("html","## **html外部連結**"),collectcode=TRUE, echo=FALSE, cleanlog=FALSE }
 genfilename "$outposix",post(.html) pre("report/") autoinc 
@@ -79,6 +82,17 @@ esttab using `r(fn)',starlevels( * 0.10 ** 0.05 *** 0.010) r2 pr2 aic   replace 
 ```
 
 
+# 圖
+```{stata, outposix=linkto("png","### 圖:直方"), collectcode=TRUE,echo=TRUE,results="hide"}
+
+  graph bar, over(foreign)
+  
+  genfilename "$outposix",post(.png) pre("report/") autoinc  
+  graph export `r(fn)', as(png) replace 
+     
+}
+
+```
 
 
 # 所有程式碼

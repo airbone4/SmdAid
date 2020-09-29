@@ -2,10 +2,25 @@
 % Please edit documentation in R/myknit.R
 \name{myknit}
 \alias{myknit}
-\title{my knit.}
+\title{Title myknit.}
 \usage{
-myknit(inputFile, encoding = "UTF-8", output_dir = "report")
+myknit(inputFile, encoding = "UTF-8", output_dir = "report", ...)
+}
+\arguments{
+\item{output_dir}{rmarkdown好像會自己切換到RMD的目錄當作「工作目錄」。
+因此,這裡的output_dir 是指RMD所在的【子目錄】。}
+
+\item{...}{}
+}
+\value{
+
 }
 \description{
 render to sub folder report
+這個函數會先檢查指定的output_dir是不是存在,
+問題是,這個output_dir 有用到嗎?
+}
+\details{
+需要這個函數是因為,_site.yml 裡面的輸出目錄,會被優先指定。而且好像
+文件中的output_dir也無用。
 }

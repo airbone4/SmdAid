@@ -1,11 +1,12 @@
-#' my knit.
+
+#' Title
+#' 如果不指定template,那就使用本套裝預設的template
+#' @param ...
 #'
-#' render to sub folder report
-#'
+#' @return
 #' @export
 #'
-
-
+#' @examples
 smd_html<-function(...){
 
 

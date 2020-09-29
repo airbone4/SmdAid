@@ -2,10 +2,18 @@
 % Please edit documentation in R/smd_html.R
 \name{smd_html}
 \alias{smd_html}
-\title{my knit.}
+\title{Title
+如果不指定template,那就使用本套裝預設的template}
 \usage{
 smd_html(...)
 }
+\arguments{
+\item{...}{}
+}
+\value{
+
+}
 \description{
-render to sub folder report
+Title
+如果不指定template,那就使用本套裝預設的template
 }
