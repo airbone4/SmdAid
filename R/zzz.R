@@ -108,7 +108,7 @@
         }
         chunktype<-paste0("\`\`\`",chunktype," ")
         txt<-paste(chunktype,txt,"\n\`\`\` ",sep = "\n")
-        txt<-paste("\n source: ",options$lisrSrc," \n",txt,sep = "\n")
+        txt<-paste("\n source: ",options$listSrc," \n",txt,sep = "\n")
         #cat(txt)
 
         return(txt)
