@@ -1,6 +1,11 @@
-td, th { padding : 6px } th { background-color : brown ; color : white; border : 1px solid white; } td { color : brown ; border : 1px solid brown }
+span.outposix {
+  font-weight: bold;
+  color: #4CAF50;
+}
 
-
+span.outposix::before{
+  content:'🔖️';
+  }
 div.sidebar, div.base {
   /* border: 3px solid #4e9a06;*/
   border-radius: 5px;

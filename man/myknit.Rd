@@ -4,7 +4,7 @@
 \alias{myknit}
 \title{Title myknit.}
 \usage{
-myknit(inputFile, encoding = "UTF-8", output_dir = "report", ...)
+myknit(inputFile, encoding = "UTF-8", output_dir = "", ...)
 }
 \arguments{
 \item{output_dir}{rmarkdown好像會自己切換到RMD的目錄當作「工作目錄」。

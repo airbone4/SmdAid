@@ -7,27 +7,43 @@
 #}
 # 找檔案,產生連結,我用了getwd()來知道現在在哪裡,
 # 但是問題是,不見得工作目錄=檔案位置
+
 .onAttach <- function (libname, pkgname) {
+message("Statamarkdown Aide attached")
+}
+
+# 如果stata 輸出到不是預設的report子目錄,而是../tmp/ 的設定方式
+# output:
+#  SmdAid::smd_html:
+#   stata_output: ../tmp/
+
+.onLoad <- function (libname, pkgname) {
+
   # libname=> C:/Program Files/R/R-4.0.2/library
   # pkgname =>pkgname
   library(Statamarkdown)
 
-  #library(Statamarkdown)
-  #Statamarkdown::find_stata(F)
   knitr::knit_hooks$set(
     #before : 是否是chunk處理之前
     outposix = function(before, options, envir) {
       # knitr::opts_knit()  好像處理跟chunk 有關的options
       #dlog(knitr::opts_knit$get(),"knit::opts_knit()")
-      #dlog(getwd(),"目前的工作目錄")
       #dlog(rmarkdown::output_metadata$get("stata_output"))
       #print(rmarkdown::metadata)
-      if(is.null(rmarkdown::metadata$output$`SmdAid::smd_html`$stata_output))
-        stata_output<-"report/"
-      else
+      dlog(knitr::opts_knit$get("stata_output"),"option")
+      #於標頭上面找output 下一層 SmdAid:smd_html下一層stata_output
+      if(!is.null(rmarkdown::metadata$output$`SmdAid::smd_html`$stata_output)){
         stata_output<-paste0(rmarkdown::metadata$output$`SmdAid::smd_html`$stata_output,"/")
-      #dlog(stata_output,"stata_output")
-      #dlog(rmarkdown::metadata$output$`SmdAid::smd_html`$stata_output)
+      }else if (!is.null(knitr::opts_knit$get("stata_output"))){
+        stata_output <-knitr::opts_knit$get("stata_output")
+      }else{
+        stata_output <-"report"
+      }
+
+
+
+      # dlog(stata_output,"stata_output")
+      # dlog(rmarkdown::metadata$output$`SmdAid::smd_html`$stata_output)
       # 拿到輸出為markdown,output.dir 是當前檔案的位置
       # 三個部分,檔案樣式,副程式名稱,title
       opts<-unlist(strsplit(options$outposix, ","));
@@ -39,7 +55,7 @@
         title<-""
       }
       if(before) {
-        envir$stata_last_no<-getmaxno(pattern,ext,stata_output);
+        envir$stata_last_no<-getmaxno(pattern,ext,stata_output);# 前置過濾型,附檔名,目錄
         #cat(paste0("=======>",envir$stata_last_no),sep="\n")
       }
       else {
@@ -48,13 +64,13 @@
         #cat(paste0("=====>lastno",lastno),sep="\n")
         #cat(paste0("=====>no",no),sep="\n")
 
-        if(title=="") rst<-"***  "
-        else   rst<-paste0(title,"  \n")
-
+        if(title=="") title<-"***  "
+        rst<-divtitle(title)
+        #else   rst<-paste0("<div class='xxxx'>",title,"</div>  \n")
         if (lastno<no) {
           if(ext=="png"){
             for(idx in  seq(lastno+1,no)){
-              of<-paste0("![fig](./",stata_output,pattern,"_",idx,".",ext,"){ width=80% }  \n")
+              of<-paste0("![fig](",stata_output,pattern,"_",idx,".",ext,"){ width=80% }  \n")
               rst<-paste0(rst,of,"\n***  \n")
             }
 
@@ -66,19 +82,27 @@
               hhtxt<-paste(readLines(paste0(stata_output,fn),encoding = "UTF-8"),collapse=" ")
               #cat(fn,file="c:/temp/xx1.txt",sep="\n",append = T)
               #cat(hhtxt,file="c:/temp/xx1.txt",sep="\n",append = T)
-              #hhtxt<-paste(readLines(fn,encoding = "UTF-8"),collapse=" ")
-              of<-paste0("[",ext," link ](./",pattern,"_",idx,".",ext,")  \n")
+
+              #舊版本輸入到report和輸出網站一樣,會有問題
+              #of<-paste0("[",ext," link ](./",pattern,"_",idx,".",ext,")  \n")
+              of<-paste0("[",ext," link ](./",stata_output,pattern,"_",idx,".",ext,")  \n")
               rst<-paste0(rst,of)
-              #rst<-paste0(rst,"<div>")
-              rst<-paste0(rst,hhtxt,"\n***  \n")
-              #rst<-paste0(rst,"</div>")
+
+              rst<-paste0(rst,
+                          "<div class='outTable'>",
+                          hhtxt,
+                          "</div>",
+                          "\n***  \n")
+
               #cat(rst,file="c:/temp/xx1.txt",sep="\n")
             }
 
           }
           else {
             for(idx in  seq(lastno+1,no)){
-              of<-paste0("[",ext," link ](./",pattern,"_",idx,".",ext,")  \n")
+              # 舊版
+              # of<-paste0("[",ext," link ](./",pattern,"_",idx,".",ext,")  \n")
+              of<-paste0("[",ext," link ](./",stata_output,pattern,"_",idx,".",ext,")  \n")
               rst<-paste0(rst,of)
             }
           }
@@ -94,7 +118,7 @@
   knitr::knit_hooks$set(
     #before : 是否是chunk處理之前
     listSrc = function(before, options, envir) {
-      dlog(before,"before")
+
 
       if(!before && file.exists(options$listSrc)){
         # 本文

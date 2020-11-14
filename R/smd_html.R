@@ -9,7 +9,7 @@
 #' @examples
 smd_html<-function(...){
 
-
+dlog('smd_html',"render function")
 
     #cat(paste0(args),file="c:/temp/xx1.txt",sep="\n",append = T)
     #mylog(args)

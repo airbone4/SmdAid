@@ -30,7 +30,7 @@ html_dependency_allcodecopy <- function() {
     version = '0.0.0.2020',
     src = 'htmldependencies/lib/smdaid-0.0.0.2020',
     script = 'js/collectCopy.js',
-    stylesheet = c('css/bluetable.css','css/mystyle.css'),
+    stylesheet = c('css/twowaytable.css','css/mystyle.css'),
     package = 'SmdAid',
     all_files = FALSE
   )
