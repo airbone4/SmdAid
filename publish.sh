@@ -1,0 +1,1 @@
+git push https://airbone4:a65276527@github.com/airbone4/SmdAid.git
