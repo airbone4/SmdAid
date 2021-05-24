@@ -30,7 +30,7 @@ message("Statamarkdown Aide attached")
       #dlog(knitr::opts_knit$get(),"knit::opts_knit()")
       #dlog(rmarkdown::output_metadata$get("stata_output"))
       #print(rmarkdown::metadata)
-      dlog(knitr::opts_knit$get("stata_output"),"option")
+      #dlog(knitr::opts_knit$get("stata_output"),"option")
       #於標頭上面找output 下一層 SmdAid:smd_html下一層stata_output
       if(!is.null(rmarkdown::metadata$output$`SmdAid::smd_html`$stata_output)){
         stata_output<-paste0(rmarkdown::metadata$output$`SmdAid::smd_html`$stata_output,"/")
@@ -63,7 +63,6 @@ message("Statamarkdown Aide attached")
         no<-getmaxno(pattern,ext,stata_output);
         #cat(paste0("=====>lastno",lastno),sep="\n")
         #cat(paste0("=====>no",no),sep="\n")
-
         if(title=="") title<-"***  "
         rst<-divtitle(title)
         #else   rst<-paste0("<div class='xxxx'>",title,"</div>  \n")
@@ -87,12 +86,13 @@ message("Statamarkdown Aide attached")
               #of<-paste0("[",ext," link ](./",pattern,"_",idx,".",ext,")  \n")
               of<-paste0("[",ext," link ](./",stata_output,pattern,"_",idx,".",ext,")  \n")
               rst<-paste0(rst,of)
+              #rst<-htmltools::htmlEscape(rst)
 
               rst<-paste0(rst,
-                          "<div class='outTable'>",
+                          "\n<div class='outTable'>",
                           hhtxt,
-                          "</div>",
-                          "\n***  \n")
+                          "</div>\n",
+                          "\n<hr/> \n")
 
               #cat(rst,file="c:/temp/xx1.txt",sep="\n")
             }
@@ -103,9 +103,13 @@ message("Statamarkdown Aide attached")
               # 舊版
               # of<-paste0("[",ext," link ](./",pattern,"_",idx,".",ext,")  \n")
               of<-paste0("[",ext," link ](./",stata_output,pattern,"_",idx,".",ext,")  \n")
+              #dlog(of,"檔案")
               rst<-paste0(rst,of)
+
             }
+
           }
+
           return (rst)
         }
         #cat(of)

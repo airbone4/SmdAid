@@ -9,7 +9,7 @@ divtitle<-function (str){
 }
 
 dlog<-function(any,title="empty"){
-  print(paste0("----- ",title, " ------"))
-  print(any)
-  print("-------------")
+  print(paste0(title, " --- ",any))
+  #print(any)
+  #print("-------------")
 }
