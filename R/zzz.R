@@ -87,6 +87,13 @@ message("Statamarkdown Aide attached")
               of<-paste0("[",ext," link ](./",stata_output,pattern,"_",idx,".",ext,")  \n")
               rst<-paste0(rst,of)
               #rst<-htmltools::htmlEscape(rst)
+			  
+			  # 比較u18fat 中的檔案,這是不是要刪除?
+              #rst<-paste0(rst,
+              #            "<div class='outTable'>",
+              #            hhtxt,
+              #            "</div>",
+              #            "\n***  \n")
 
               rst<-paste0(rst,
                           "\n<div class='outTable'>",
