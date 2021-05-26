@@ -11,10 +11,12 @@ getmaxno<-function(pattern,ext,adir="report/"){
   wd<-paste0(getwd(),"/",adir)
   # cat(paste0("======>",wd),sep="\n")
   list <- list.files(wd, "*" );
-
+  #下面用來看找到甚麼檔案
+  #dlog(paste0(list,collapse=","));
   what<-paste0("(?<=",pattern,"_).*(\\d)+","(?=\\.",ext,")");
-  r1<-stringr::str_extract(list,what)
-  idxlist<-as.integer(stringr::str_extract(r1,"\\d$"))
+
+  r1<-stringr::str_extract(list,what);
+  idxlist<-as.integer(stringr::str_extract(r1,"\\d+$"));//bug fix
   idxlist<-idxlist[!is.na(idxlist)];
    if(length(idxlist)==0)
      return(0)

@@ -57,6 +57,7 @@ message("Statamarkdown Aide attached")
       if(before) {
         envir$stata_last_no<-getmaxno(pattern,ext,stata_output);# 前置過濾型,附檔名,目錄
         #cat(paste0("=======>",envir$stata_last_no),sep="\n")
+
       }
       else {
         lastno<-envir$stata_last_no;
@@ -65,7 +66,8 @@ message("Statamarkdown Aide attached")
         #cat(paste0("=====>no",no),sep="\n")
         if(title=="") title<-"***  "
         rst<-divtitle(title)
-        #else   rst<-paste0("<div class='xxxx'>",title,"</div>  \n")
+
+
         if (lastno<no) {
           if(ext=="png"){
             for(idx in  seq(lastno+1,no)){
@@ -87,7 +89,7 @@ message("Statamarkdown Aide attached")
               of<-paste0("[",ext," link ](./",stata_output,pattern,"_",idx,".",ext,")  \n")
               rst<-paste0(rst,of)
               #rst<-htmltools::htmlEscape(rst)
-			  
+
 			  # 比較u18fat 中的檔案,這是不是要刪除?
               #rst<-paste0(rst,
               #            "<div class='outTable'>",
