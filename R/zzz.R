@@ -66,13 +66,10 @@ message("Statamarkdown Aide attached")
         #cat(paste0("=====>no",no),sep="\n")
         if(title=="") title<-"***  "
         rst<-divtitle(title)
-<<<<<<< HEAD
-        #else   rst<-paste0("<div class='xxxx'>",title,"</div>  \n")
-        dlog(paste0(no,", ",lastno))
-=======
 
+        
+        #dlog(paste0(no,", ",lastno))
 
->>>>>>> b30167dd1aec70a1ec9ed3d1228ed4b436c167c2
         if (lastno<no) {
           if(ext=="png"){
             for(idx in  seq(lastno+1,no)){
