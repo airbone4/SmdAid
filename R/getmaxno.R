@@ -11,12 +11,21 @@ getmaxno<-function(pattern,ext,adir="report/"){
   wd<-paste0(getwd(),"/",adir)
   # cat(paste0("======>",wd),sep="\n")
   list <- list.files(wd, "*" );
+<<<<<<< HEAD
   # what 是表達式
   what<-paste0("(?<=",pattern,"_).*(\\d)+","(?=\\.",ext,")");
   # 找出pattern 後面的數字
   r1<-stringr::str_extract(list,what)
   # 應該要有+號吧?之前沒有
   idxlist<-as.integer(stringr::str_extract(r1,"\\d+$"))
+=======
+  #下面用來看找到甚麼檔案
+  #dlog(paste0(list,collapse=","));
+  what<-paste0("(?<=",pattern,"_).*(\\d)+","(?=\\.",ext,")");
+
+  r1<-stringr::str_extract(list,what);
+  idxlist<-as.integer(stringr::str_extract(r1,"\\d+$"));//bug fix
+>>>>>>> b30167dd1aec70a1ec9ed3d1228ed4b436c167c2
   idxlist<-idxlist[!is.na(idxlist)];
    if(length(idxlist)==0)
      return(0)
